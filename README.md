@@ -1,4 +1,4 @@
-# 📄 DocX – Seamless File-Based Documentation Builder (Node.js)
+# 📄 DocX – Seamless File-Based Documentation Builder
 **DocX** is a seamless, file-based documentation builder built with **Node.js**. It enables you to effortlessly generate clean, structured documentation from simple markdown or text files—ideal for developers, projects, and internal tools.
 
 ---
