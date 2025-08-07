@@ -1,0 +1,42 @@
+### Installation Guide
+- First run this in your terminal
+`npm install express`
+
+- Then, create a file `docx.config.json` in root Directory with this content
+```json
+{
+    "docx": {
+        "title": "DocX",
+        "description": "A simple to use and powerful document generator!",
+        "url": "/",
+        "root": "Introduction",
+        "logo": "",
+        "theme": {
+            "color": {
+                "body": "#0a0a0a",
+                "navbar": "#151a2d",
+                "primary": "#9e2a59",
+                "secondary": "#ffcb82",
+                "heading": "#FFDAB9",
+                "paragraph": "#E6E6FA"
+            },
+            "font": {
+                "default": "Space Grotesk",
+                "note": "add more if needed"
+            }
+        }
+    },
+    "web": {
+        "port": 3000
+    }
+}
+```
+
+- Then finally put these in the start of your code
+```js
+const express = require('express');
+const path = require('path');
+const fs = require('fs');
+const app = express();
+const config = require('./docx.config.json');
+```

@@ -1,0 +1,17 @@
+{
+  "name": "docx",
+  "version": "1.0.0",
+  "description": "A simple to use and powerful document generator!",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "keywords": [],
+  "author": "pvermax",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "fs": "^0.0.1-security"
+  }
+}

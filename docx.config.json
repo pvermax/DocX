@@ -1,0 +1,26 @@
+{
+    "docx": {
+        "title": "DocX",
+        "description": "A simple to use and powerful document generator!",
+        "url": "/",
+        "root": "Introduction",
+        "logo": "",
+        "theme": {
+            "color": {
+                "body": "#0a0a0a",
+                "navbar": "#151a2d",
+                "primary": "#9e2a59",
+                "secondary": "#ffcb82",
+                "heading": "#FFDAB9",
+                "paragraph": "#E6E6FA"
+            },
+            "font": {
+                "default": "Space Grotesk",
+                "note": "add more if needed"
+            }
+        }
+    },
+    "web": {
+        "port": 3000
+    }
+}

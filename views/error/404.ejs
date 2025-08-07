@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>404 - <%= docx.title %></title>
+    <link rel="stylesheet" href="/assets/styles/includes.css" />
+    <link rel="stylesheet" href="/assets/styles/extras.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+      :root {
+        --body-color: <%= docx.theme.color.body %>;
+        --navbar-color: <%= docx.theme.color.navbar %>;
+        --primary-color: <%= docx.theme.color.primary %>;
+        --secondary-color: <%= docx.theme.color.secondary %>;
+        --heading-color: <%= docx.theme.color.heading %>;
+        --paragraph-color: <%= docx.theme.color.paragraph %>;
+        --default-font: "<%= docx.theme.font.default %>";
+      }
+    </style>
+  </head>
+  <body style="background-color: var(--navbar-color);">
+    <div class="err-info">
+      <h1 class="err-code">404</h1>
+      <p class="err-message">Page Not Found</p>
+      <a href="/" class="err-home-link">Home</a>
+    </div>
+  </body>
+</html>

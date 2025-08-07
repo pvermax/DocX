@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= docx.title %></title>
+    <link rel="stylesheet" href="/assets/styles/includes.css" />
+    <link rel="stylesheet" href="/assets/styles/main.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --body-color: <%= docx.theme.color.body %>;
+        --navbar-color: <%= docx.theme.color.navbar %>;
+        --primary-color: <%= docx.theme.color.primary %>;
+        --secondary-color: <%= docx.theme.color.secondary %>;
+        --heading-color: <%= docx.theme.color.heading %>;
+        --paragraph-color: <%= docx.theme.color.paragraph %>;
+        --default-font: "<%= docx.theme.font.default %>";
+      }
+    </style>
+  </head>
+  <body>
+    <!-- nav-toggle-bottom will be used for sidebar toggle on mobile -->
+    <aside class="sidebar" id="sidebar">
+      <!-- Sidebar Header -->
+      <header class="sidebar-header"></header>
+      <nav class="sidebar-nav">
+        <!-- Primary Top Nav -->
+        <ul class="nav-list primary-nav">
+          <% const renderTree = (items) => { %> <% items.forEach(item => { %> <%
+          if (item.type === 'folder') {
+            // Check if the current path is a descendant of this folder
+            const isExpanded = item.children && item.children.some(child => {
+              if (child.type === 'file') {
+                return ('/' + child.path) === path;
+              } else if (child.type === 'folder') {
+                // Recursively check subfolders
+                const checkDescendant = (folder) => folder.children && folder.children.some(grandchild => {
+                  if (grandchild.type === 'file') {
+                    return ('/' + grandchild.path) === path;
+                  } else if (grandchild.type === 'folder') {
+                    return checkDescendant(grandchild);
+                  }
+                  return false;
+                });
+                return checkDescendant(child);
+              }
+              return false;
+            });
+          %>
+          <li class="nav-item dropdown-container<%= isExpanded ? ' expanded' : '' %>">
+            <a
+              href="#"
+              style="font-weight: 500"
+              class="nav-link dropdown-toggle"
+            >
+              <span class="nav-label"><%= item.name %></span>
+              <span class="dropdown-icon material-symbols-rounded"
+                >keyboard_arrow_down</span
+              >
+            </a>
+            <ul class="dropdown-menu"<%= isExpanded ? ' style="display:block"' : '' %>>
+              <% renderTree(item.children); %>
+            </ul>
+          </li>
+          <% } else if (item.type === 'file') { %>
+          <li class="nav-item">
+            <a
+              href="/<%= item.path %>"
+              style="font-weight: 400"
+              class="nav-link dropdown-link<%= ('/' + item.path) === path ? ' active' : '' %>"
+              ><%= item.name %></a
+            >
+          </li>
+          <% } %> <% }) %> <% } %> <% renderTree(docsTree); %>
+        </ul>
+      </nav>
+    </aside>
+    <% const segments = path.split('/').filter(Boolean); %>
+    <nav class="breadcrumb">
+      <a href="/"><%= docx.title %></a>
+      <% segments.forEach((segment, index) => { const href = '/' +
+      segments.slice(0, index + 1).join('/'); %>
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke-width="2"
+        stroke="currentColor"
+        class="size-6"
+        width="1rem"
+        height="1rem"
+      >
+        <path
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          d="m8.25 4.5 7.5 7.5-7.5 7.5"
+        />
+      </svg>
+      <a href="<%= href %>"><%= segment.replace("%20", " ") %></a>
+      <% }); %>
+    </nav>
+    <div class="docx-canvas"><%- doc %></div>
+    <button class="nav-toggle-bottom">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        class="size-6"
+        width="32px"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M3 6.75A.75.75 0 0 1 3.75 6h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 6.75ZM3 12a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 12Zm0 5.25a.75.75 0 0 1 .75-.75h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1-.75-.75Z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </button>
+    <script src="/assets/scripts/main.js"></script>
+    <script src="/assets/scripts/docxReqs.js"></script>
+    <script>
+      DocX.init(
+        "<%= docx.theme.color.heading %>",
+        "<%= docx.theme.color.paragraph %>",
+        "<%= docx.theme.color.primary %>",
+        "<%= docx.theme.color.secondary %>"
+      );
+    </script>
+  </body>
+</html>
